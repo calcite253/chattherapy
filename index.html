@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담사 챗테라피</title>
+</head>
+<body>
+    <h1></h1>
+    <button onclick="postJSON(data)">요청하기</button>
+    <script>
+        async function postJSON(data) {
+            try {
+                const response = await fetch("http://localhost:3000/chattherapy", {
+                method: "POST", // 또는 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            console.log("성공:", result);
+        } catch (error) {
+            console.error("실패:", error);
+        } 
+        }
+
+        const data = { username: "example" };
+        postJSON(data);
+    </script>
+</body>
+</html>
