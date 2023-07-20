@@ -1,163 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>상담사 챗테라피</title>
-  <style>
-    /* Chat container styles */
-    .chat-container {
-      width: 400px;
-      margin: 0 auto;
-      border: 1px solid #ccc;
-      padding: 20px;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Chat messages styles */
-    .chat-messages {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .chat-message {
-      margin-bottom: 10px;
-    }
-
-    .chat-role {
-      font-weight: bold;
-    }
-
-    .chat-content {
-      margin-left: 20px;
-    }
-
-    /* Input area styles */
-    .input-container {
-      margin-top: 10px;
-    }
-
-    .user-input {
-      width: 100%;
-      padding: 5px;
-      box-sizing: border-box;
-    }
-
-    .send-button {
-      margin-top: 5px;
-      width: 100%;
-      padding: 5px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
 </head>
+
 <body>
-  <div class="chat-container">
-    <ul class="chat-messages" id="chatMessages"></ul>
-    <div class="input-container">
-      <input type="text" class="user-input" id="userInput" placeholder="Type your message">
-      <button class="send-button" onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
+  <h1></h1>
+  <button onclick="sendChatMessage()">요청하기</button>
   <script>
-    const chatMessages = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userInput');
-
-    // Function to display a message in the chat container
-    function displayMessage(role, content) {
-      const messageItem = document.createElement('li');
-      messageItem.className = 'chat-message';
-
-      const roleElement = document.createElement('span');
-      roleElement.className = 'chat-role';
-      roleElement.textContent = role + ': ';
-
-      const contentElement = document.createElement('span');
-      contentElement.className = 'chat-content';
-      contentElement.textContent = content;
-
-      messageItem.appendChild(roleElement);
-      messageItem.appendChild(contentElement);
-
-      chatMessages.appendChild(messageItem);
-    }
-
-    // Function to send a message to the server and receive a response
-    async function sendMessage() {
-      const userMessage = userInput.value;
-
-      if (userMessage.trim() === '') {
-        return;
-      }
-
-      displayMessage('User', userMessage);
-      userInput.value = '';
-
+    async function sendChatMessage() {
       try {
         const response = await fetch('http://localhost:3000/chattherapy', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ role: 'user', content: userMessage })
+          body: JSON.stringify({ name: 'John' })
         });
 
         const data = await response.json();
-        const assistantMessage = data.assistant;
-        displayMessage('Assistant', assistantMessage);
+        concole.log(data);
+        return data;
       } catch (error) {
-        console.error('Failed to send message:', error);
+          concole.error(error);
       }
     }
+        
+
   </script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상담사 챗테라피</title>
-</head>
-<body>
-    <h1></h1>
-    <button onclick="postJSON(data)">요청하기</button>
-    <script>
-        async function postJSON(data) {
-            try {
-                const response = await fetch("http://localhost:3000/chattherapy", {
-                method: "POST", // 또는 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-            console.log("성공:", result);
-        } catch (error) {
-            console.error("실패:", error);
-        } 
-        }
-
-        const data = { username: "example" };
-        postJSON(data);
-    </script>
-</body>
-</html> -->

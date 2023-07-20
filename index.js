@@ -31,7 +31,7 @@ app.post('/chattherapy', async function (req, res) {
         { role: "user", content: "기분이 너무 우울해. 내가 뭔가를 해낼 수 있긴 할까?" },
     ],
     });
-  let therapy = chatCompletion.data.choices[0].message['content']
+  let therapy = chatCompletion.data.choices[0].message.content;
   console.log(therapy);
   res.json({"assistant": therapy});
 });
